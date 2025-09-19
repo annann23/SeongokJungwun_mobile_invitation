@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica', sans-serif;
+    background-color: #000000;
+    overflow-x: hidden;
+  }
+  
+  .font-waterfall {
+    font-family: 'Waterfall';
+    font-weight: 700;
+  }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .font-noto-serif-kr {
+    font-family: 'Noto Serif KR';
+    font-weight: 400;
+  }
+  
+  * {
+    box-sizing: border-box;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .scroll-container {
+    height: 300vh; /* 3개의 100vh 섹션 */
+  }
+}
+
+/* 별 반짝임 효과를 위한 커스텀 스타일 */
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* 텍스트용 twinkle 애니메이션 */
+@keyframes textTwinkle {
+  0%, 100% { 
+    opacity: 0.8;
+    text-shadow: 
+      0 0 10px rgba(255, 255, 255, 0.8),
+      0 0 20px rgba(255, 255, 255, 0.6),
+      0 0 30px rgba(255, 255, 255, 0.4),
+      0 0 40px rgba(255, 255, 255, 0.2);
+  }
+  50% { 
+    opacity: 1;
+    text-shadow: 
+      0 0 15px rgba(255, 255, 255, 1),
+      0 0 25px rgba(255, 255, 255, 0.8),
+      0 0 35px rgba(255, 255, 255, 0.6),
+      0 0 45px rgba(255, 255, 255, 0.4);
+  }
 }
