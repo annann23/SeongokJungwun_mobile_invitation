@@ -3,8 +3,6 @@
 import { memo } from 'react';
 import Image from 'next/image';
 
-interface SilhouetteSectionProps {}
-
 const SilhouetteSection = memo(() => {
   return (
     <div className="relative w-full h-screen flex items-end justify-center overflow-hidden z-20">

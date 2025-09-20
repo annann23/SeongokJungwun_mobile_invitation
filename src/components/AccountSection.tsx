@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useState } from 'react';
-import { motion as m, AnimatePresence } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'motion/react';
 
 const AccountSection = memo(() => {
   const [groomExpanded, setGroomExpanded] = useState(false);
@@ -16,14 +16,14 @@ const AccountSection = memo(() => {
     },
     {
       name: "채종재",
-      bank: "토스뱅크", 
-      account: "1000-1234-5679",
+      bank: "농협", 
+      account: "725067-51-013836",
       relation: "신랑 아버지"
     },
     {
       name: "강외숙",
-      bank: "토스뱅크",
-      account: "1000-1234-5680", 
+      bank: "농협",
+      account: "302-4102-8878-01", 
       relation: "신랑 어머니"
     }
   ];
@@ -37,15 +37,25 @@ const AccountSection = memo(() => {
     }
   ];
 
-  const copyAccount = (account: string) => {
-    navigator.clipboard.writeText(account);
-    alert('계좌번호가 복사되었습니다!');
-  };
+  const unsecuredCopyToClipboard = (text: string) => { 
+    const textArea = document.createElement("textarea"); 
+    textArea.value=text; 
+    document.body.appendChild(textArea); 
+    textArea.focus();
+    textArea.select(); 
+    try { 
+      document.execCommand('copy')
+    } catch(err) {
+      console.error('Unable to copy to clipboard',err )
+    };
+    document.body.removeChild(textArea)};
 
-  const openPay = (account: string) => {
-    // 간편송금 앱 열기 (토스, 카카오페이 등)
-    const payUrl = `toss://transfer?accountNumber=${account}`;
-    window.location.href = payUrl;
+  const copyAccount = (account: string) => {
+    if (window.isSecureContext && navigator.clipboard) {
+      navigator.clipboard.writeText(account);
+    } else {
+      unsecuredCopyToClipboard(account);
+    }
   };
 
   const AccountCard = ({ account, isExpanded }: { account: any, isExpanded: boolean }) => (
@@ -59,31 +69,26 @@ const AccountSection = memo(() => {
       transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{ overflow: "hidden" }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col items-start justify-between">
         <div className="flex-1">
           <div className="text-sm font-medium text-gray-800 mb-1">{account.name}</div>
           <div className="text-xs text-gray-600 mb-2">{account.relation}</div>
-          <div className="text-sm text-gray-700 mb-1">{account.bank}</div>
-          <div className="text-sm font-mono text-gray-800">{account.account}</div>
         </div>
-        <div className="flex gap-2 ml-4">
-          <button
-            onClick={() => copyAccount(account.account)}
-            className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center active:bg-gray-300 transition-colors"
-          >
-            <svg className="w-4 h-4 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
-              <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" />
-            </svg>
-          </button>
-          <button
-            onClick={() => openPay(account.account)}
-            className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center active:bg-blue-600 transition-colors"
-          >
-            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.759 8.07 16 9.006 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.44a1 1 0 00-1.414-1.414l-.705.705a2 2 0 000 2.828l.705-.705zm2.828-2.828l.705.705a2 2 0 000-2.828l-.705-.705a1 1 0 00-1.414 1.414zm.705.705l3.536-3.536a1 1 0 00-1.414-1.414l-3.536 3.536a1 1 0 001.414 1.414z" clipRule="evenodd" />
-            </svg>
-          </button>
+        <div className="flex w-full items-end justify-between gap-2">
+          <div className="flex-1">
+            <div className="text-sm text-gray-700 mb-1">{account.bank}</div>
+            <div className="text-sm font-mono text-gray-800">{account.account}</div>
+          </div>
+          <div className="flex flex-col items-center gap-0.5">
+            
+            <button
+              onClick={() => copyAccount(account.account)}
+              className="w-16 h-8 bg-gray-200 rounded-md flex items-center justify-center"
+            >
+              <span className="text-[12px] text-gray-600">복사하기</span>
+            </button>
+          </div>
+   
         </div>
       </div>
     </m.div>
@@ -101,7 +106,7 @@ const AccountSection = memo(() => {
       >
         <button
           onClick={() => setGroomExpanded(!groomExpanded)}
-          className="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+          className="w-full p-4 flex items-center justify-between text-left"
         >
           <span className="font-medium text-gray-800">신랑측에게</span>
           <m.div
@@ -141,7 +146,7 @@ const AccountSection = memo(() => {
       >
         <button
           onClick={() => setBrideExpanded(!brideExpanded)}
-          className="w-full p-4 flex items-center justify-between text-left hover:bg-gray-50 transition-colors"
+          className="w-full p-4 flex items-center justify-between text-left"
         >
           <span className="font-medium text-gray-800">신부측에게</span>
           <m.div

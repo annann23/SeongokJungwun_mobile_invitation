@@ -13,23 +13,23 @@ const CountdownTimer = ({ targetDate, className = '' }: CountdownTimerProps) => 
   const formatNumber = (num: number) => num.toString().padStart(2, '0');
 
   return (
-    <div className={`w-screen px-[30px] flex justify-between items-center gap-4 text-center ${className}`}>
-      <div className="text-[24px] text-black md:text-3xl">
-        {timeLeft.days}일
+    <div className={`w-[280px] flex justify-between items-center gap-4 text-center ${className}`}>
+      <div className="text-[24px] text-violet-300">
+        {timeLeft.days} <span className='text-sm font-gowun-dodum text-gray-600'>일</span>
       </div>
         <div className="text-center">
-          <div className="text-[24px] md:text-4xl font-mono text-gray-800">
-            {formatNumber(timeLeft.hours)}시간
+          <div className="text-[24px] font-mono text-violet-300">
+            {formatNumber(timeLeft.hours)}<span className='text-sm font-gowun-dodum text-gray-600'>시간</span>
           </div>
         </div>
         <div className="text-center">
-          <div className="text-[24px] md:text-4xl font-mono text-gray-800">
-            {formatNumber(timeLeft.minutes)}분
+          <div className="text-[24px] font-mono text-violet-300">
+            {formatNumber(timeLeft.minutes)}<span className='text-sm font-gowun-dodum text-gray-600'>분</span>
           </div>
         </div>
         <div className="text-center">
-          <div className="text-[24px] md:text-4xl font-mono text-gray-800">
-            {formatNumber(timeLeft.seconds)}초
+          <div className="text-[24px] font-mono text-violet-300">
+            {formatNumber(timeLeft.seconds)}<span className='text-sm font-gowun-dodum text-gray-600'>초</span>
           </div>
       </div>
     </div>

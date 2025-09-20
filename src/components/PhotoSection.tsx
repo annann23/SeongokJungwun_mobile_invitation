@@ -3,6 +3,8 @@
 import { memo, useState } from 'react';
 import Image from 'next/image';
 import { motion as m } from 'framer-motion';
+import { faArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface PhotoSectionProps {
   onBackToTop: () => void;
@@ -12,46 +14,137 @@ const PhotoSection = memo(({ onBackToTop }: PhotoSectionProps) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showAllImages, setShowAllImages] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [modalImageLoaded, setModalImageLoaded] = useState(false);
 
-  const images = [
-    '/images/wedding_img/img_1.jpg',
-    '/images/wedding_img/img_2.jpg',
-    '/images/wedding_img/img_3.jpg',
-    '/images/wedding_img/img_4.jpg',
-    '/images/wedding_img/img_5.jpg',
-    '/images/wedding_img/img_6.jpg',
-    '/images/wedding_img/img_7.jpg',
-    '/images/wedding_img/img_8.jpg',
-    '/images/wedding_img/img_9.jpg',
-    '/images/wedding_img/img_10.jpg',
-    '/images/wedding_img/img_11.jpg',
-    '/images/wedding_img/img_12.jpg',
-    '/images/wedding_img/img_13.jpg',
-    '/images/wedding_img/img_14.jpg',
-    '/images/wedding_img/img_15.jpg',
-    '/images/wedding_img/img_16.jpg',
-    '/images/wedding_img/img_17.jpg',
-    '/images/wedding_img/img_18.jpg',
-    '/images/wedding_img/img_19.jpg',
-    '/images/wedding_img/img_20.jpg',
+  // 썸네일용 작은 이미지들 (img_sm_)
+  const thumbnailImages = [
+    '/images/wedding_img/img_sm_1.jpeg',
+    '/images/wedding_img/img_sm_2.jpeg',
+    '/images/wedding_img/img_sm_3.jpeg',
+    '/images/wedding_img/img_sm_4.jpeg',
+    '/images/wedding_img/img_sm_5.jpeg',
+    '/images/wedding_img/img_sm_6.jpeg',
+    '/images/wedding_img/img_sm_7.jpeg',
+    '/images/wedding_img/img_sm_8.jpeg',
+    '/images/wedding_img/img_sm_9.jpeg',
+    '/images/wedding_img/img_sm_10.jpeg',
+    '/images/wedding_img/img_sm_11.jpeg',
+    '/images/wedding_img/img_sm_12.jpeg',
+    '/images/wedding_img/img_sm_13.jpeg',
+    '/images/wedding_img/img_sm_14.jpeg',
+    '/images/wedding_img/img_sm_15.jpeg',
+    '/images/wedding_img/img_sm_16.jpeg',
   ];
 
-  const displayedImages = showAllImages ? images : images.slice(0, 9);
+  // 모달용 원본 이미지들 (img_)
+  const originalImages = [
+    '/images/wedding_img/img_1.jpeg',
+    '/images/wedding_img/img_2.jpeg',
+    '/images/wedding_img/img_3.jpeg',
+    '/images/wedding_img/img_4.jpeg',
+    '/images/wedding_img/img_5.jpeg',
+    '/images/wedding_img/img_6.jpeg',
+    '/images/wedding_img/img_7.jpeg',
+    '/images/wedding_img/img_8.jpeg',
+    '/images/wedding_img/img_9.jpeg',
+    '/images/wedding_img/img_10.jpeg',
+    '/images/wedding_img/img_11.jpeg',
+    '/images/wedding_img/img_12.jpeg',
+    '/images/wedding_img/img_13.jpeg',
+    '/images/wedding_img/img_14.jpeg',
+    '/images/wedding_img/img_15.jpeg',
+    '/images/wedding_img/img_16.jpeg',
+  ];
 
-  const handleTouchStart = (imageSrc: string) => {
-    setSelectedImage(imageSrc);
+  const displayedImages = showAllImages ? thumbnailImages : thumbnailImages.slice(0, 9);
+
+  const handleImageClick = (index: number) => {
+    setSelectedImage(originalImages[index]);
+    setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
+    // 모달이 열릴 때 body 스크롤 차단
+    document.body.style.overflow = 'hidden';
   };
 
-  const handleCloseModal = () => {
+  // 터치 시작과 끝 위치를 비교해서 실제 탭인지 확인
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const startX = touch.clientX;
+    const startY = touch.clientY;
+    
+    // 터치 시작 위치를 저장
+    (e.currentTarget as HTMLElement).dataset.startX = startX.toString();
+    (e.currentTarget as HTMLElement).dataset.startY = startY.toString();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent, index: number) => {
+    const touch = e.changedTouches[0];
+    const endX = touch.clientX;
+    const endY = touch.clientY;
+    
+    // 터치 시작 위치 가져오기
+    const startX = parseFloat((e.currentTarget as HTMLElement).dataset.startX || '0');
+    const startY = parseFloat((e.currentTarget as HTMLElement).dataset.startY || '0');
+    
+    // 이동 거리 계산
+    const deltaX = Math.abs(endX - startX);
+    const deltaY = Math.abs(endY - startY);
+    
+    // 10px 이내의 움직임이면 탭으로 간주
+    if (deltaX < 10 && deltaY < 10) {
+      setSelectedImage(originalImages[index]);
+      setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
+      // 모달이 열릴 때 body 스크롤 차단
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  const handleCloseModal = (e?: React.MouseEvent | React.TouchEvent) => {
+    // 이미지가 로드되기 전에는 모달을 닫지 않음
+    if (!modalImageLoaded) {
+      return;
+    }
+    
+    if (e) {
+      e.stopPropagation();
+    }
     setSelectedImage(null);
+    setModalImageLoaded(false);
+    // 모달이 닫힐 때 body 스크롤 복원
+    document.body.style.overflow = 'unset';
   };
 
-  const handleShowMore = () => {
+  // 모달 배경 클릭 시 모달 닫기
+  const handleModalBackgroundClick = (e: React.MouseEvent | React.TouchEvent) => {
+    // 모달 배경을 직접 클릭했을 때만 닫기
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  // 모달에서 터치 이벤트 차단 (스크롤 방지)
+  const handleModalTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault();
+  };
+
+  const handleModalTouchMove = (e: React.TouchEvent) => {
+    e.preventDefault();
+  };
+
+  const handleShowMore = (e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setShowAllImages(true);
   };
 
   const handleImageLoad = (index: number) => {
     setLoadedImages(prev => new Set(prev).add(index));
+  };
+
+  // 모달 이미지 로드 핸들러
+  const handleModalImageLoad = () => {
+    setModalImageLoaded(true);
   };
 
   // 스켈레톤 컴포넌트
@@ -66,21 +159,34 @@ const PhotoSection = memo(({ onBackToTop }: PhotoSectionProps) => {
   return (
     <div className="w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="text-center p-4 max-w-4xl mx-auto">
-        <h1 className='text-black text-4xl text-center mb-8 font-noto-serif-kr'>Gallery</h1>
-        <h5 className='text-black text-sm text-center mb-8 font-noto-serif-kr'>사진을 터치하시면 전체화면 보기가 가능합니다.</h5>
+        <m.h1 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeIn" }}
+        className='text-black text-4xl text-center mb-4 font-scope-one'>Gallery</m.h1>
+        <m.h5
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeIn", delay: 0.2 }}
+        className='text-black text-sm text-center mb-12 font-noto-serif-kr'>사진을 터치하시면 전체화면 보기가 가능합니다.</m.h5>
         {/* 웨딩 사진 갤러리 - 3줄 그리드 */}
         <div className="grid grid-cols-3 gap-2 mb-8">
           {displayedImages.map((imageSrc, index) => (
             <m.div
               key={index}
               className="aspect-square rounded-lg overflow-hidden relative group cursor-pointer active:scale-95 transition-transform duration-200"
-              onTouchStart={() => handleTouchStart(imageSrc)}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={(e) => handleTouchEnd(e, index)}
+              onClick={() => handleImageClick(index)}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
               transition={{ 
                 duration: 0.6, 
                 delay: index * 0.1, // 각 이미지마다 0.1초씩 지연
-                ease: "easeOut"
+                ease: "easeIn"
               }}
             >
               {/* 스켈레톤 로딩 */}
@@ -109,14 +215,19 @@ const PhotoSection = memo(({ onBackToTop }: PhotoSectionProps) => {
 
         {/* 더보기 버튼 */}
         {!showAllImages && (
-          <div className="mb-8">
+          <m.div className="mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.6, ease: "easeIn" }}
+          >
             <button
-              onTouchStart={handleShowMore}
+              onClick={handleShowMore}
               className="px-6 py-3 text-black rounded-full font-medium transition-all duration-200"
             >
-              더보기
+              더보기 <FontAwesomeIcon icon={faArrowDown} />
             </button>
-          </div>
+          </m.div>
         )}
       </div>
 
@@ -124,22 +235,31 @@ const PhotoSection = memo(({ onBackToTop }: PhotoSectionProps) => {
       {selectedImage && (
         <div 
           className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onTouchStart={handleCloseModal}
+          onClick={handleModalBackgroundClick}
+          onTouchEnd={handleModalBackgroundClick}
+          onTouchStart={handleModalTouchStart}
+          onTouchMove={handleModalTouchMove}
         >
-          <div className="relative max-w-full max-h-full">
+           <button
+             onClick={handleCloseModal}
+             disabled={!modalImageLoaded}
+             className={`absolute top-4 right-4 w-8 h-8 text-white rounded-full flex items-center justify-center text-xl font-bold transition-all duration-200`}
+         >
+             <FontAwesomeIcon icon={faXmark} />
+           </button>
+          <div 
+            className="relative max-w-full max-h-full"
+            onClick={(e) => e.stopPropagation()}
+            onTouchEnd={(e) => e.stopPropagation()}
+          >
             <Image
               src={selectedImage}
               alt="확대된 웨딩 사진"
               width={800}
               height={800}
               className="max-w-full max-h-full object-contain rounded-lg"
+              onLoad={handleModalImageLoad}
             />
-            <button
-              onClick={handleCloseModal}
-              className="absolute top-4 right-4 w-8 h-8 bg-white/20 text-white rounded-full flex items-center justify-center text-xl font-bold"
-            >
-              ×
-            </button>
           </div>
         </div>
       )}
