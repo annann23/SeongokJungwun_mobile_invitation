@@ -69,7 +69,7 @@
 
 @layer utilities {
   .scroll-container {
-    height: 300vh; /* 3개의 100vh 섹션 */
+    height: 300vh; 
   }
 }
 
@@ -88,22 +88,6 @@
     color-scheme: light !important;
     background-color: #000000 !important;
     color: #ffffff !important;
-  }
-  
-  /* 모든 섹션의 배경색 강제 설정 */
-  div[style*="background-color"] {
-    background-color: inherit !important;
-  }
-  
-  /* 모달 배경색 강제 설정 */
-  .fixed.inset-0 {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-  }
-  
-  /* 버튼 색상 강제 설정 */
-  button {
-    background-color: inherit !important;
-    color: inherit !important;
   }
 }
 

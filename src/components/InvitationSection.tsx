@@ -4,7 +4,7 @@ import { motion as m } from 'motion/react';
 
 export default function InvitationSection() {
   return (
-    <div className="h-200vh flex flex-col items-center justify-center relative" style={{ backgroundColor: '#ffffff' }}>
+    <div className="h-[2400px] flex flex-col items-center justify-center relative" style={{ backgroundColor: '#ffffff' }}>
       <div className="w-full h-full absolute inset-0" style={{
         background: 'linear-gradient(180deg, #000000 0%, #ffffff 50%, #ffffff 100%)'
       }}></div>
@@ -48,7 +48,7 @@ export default function InvitationSection() {
           </m.div>
         </div>
      
-        <div className='h-120vh text-black flex flex-col items-center justify-center w-screen px-[30px]'>
+        <div className='h-[1600px] text-black flex flex-col items-center justify-center w-screen px-[30px]'>
           <m.img
             initial={{ opacity: 0, y: 200 }}
             whileInView={{ opacity: 1, y: 0 }}

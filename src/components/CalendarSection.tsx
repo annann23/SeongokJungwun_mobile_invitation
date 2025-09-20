@@ -5,7 +5,7 @@ import CountdownTimer from './CountdownTimer';
 
 export default function CalendarSection() {
   return (
-    <div className='h-[120vh] relative flex flex-col items-center justify-center bg-[#fff]'>
+    <div className='h-[1200px] relative flex flex-col items-center justify-center bg-[#fff]'>
       <m.h1 
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}
