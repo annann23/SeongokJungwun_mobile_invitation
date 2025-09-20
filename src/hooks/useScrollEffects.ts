@@ -29,17 +29,6 @@ export const useScrollEffects = () => {
     }));
   }, []);
 
-  // 불필요한 사진 모드 관련 함수들 제거
-
-  // handleWheel 함수 제거 - 더 이상 필요 없음
-
-  const scrollToTop = useCallback(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }, []);
-
   const requestTick = useCallback(() => {
     if (!ticking.current) {
       requestAnimationFrame(() => {
@@ -69,6 +58,5 @@ export const useScrollEffects = () => {
 
   return {
     ...scrollState,
-    scrollToTop,
   };
 };

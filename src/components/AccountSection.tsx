@@ -7,6 +7,13 @@ const AccountSection = memo(() => {
   const [groomExpanded, setGroomExpanded] = useState(false);
   const [brideExpanded, setBrideExpanded] = useState(false);
 
+  interface accountType {
+    name: string;
+    bank: string;
+    account: string;
+    relation: string;
+  }
+
   const groomAccounts = [
     {
       name: "채성옥",
@@ -47,7 +54,7 @@ const AccountSection = memo(() => {
     } 
   };
 
-  const AccountCard = ({ account, isExpanded }: { account: any, isExpanded: boolean }) => (
+  const AccountCard = ({ account, isExpanded }: { account: accountType, isExpanded: boolean }) => (
     <m.div
       className="bg-gray-50 rounded-xl p-4 mb-3"
       initial={false}

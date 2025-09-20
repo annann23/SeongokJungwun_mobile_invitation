@@ -6,11 +6,7 @@ import { motion as m } from 'framer-motion';
 import { faArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface PhotoSectionProps {
-  onBackToTop: () => void;
-}
-
-const PhotoSection = memo(({ onBackToTop }: PhotoSectionProps) => {
+const PhotoSection = memo(() => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showAllImages, setShowAllImages] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());

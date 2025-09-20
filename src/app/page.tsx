@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useScrollEffects } from '@/hooks/useScrollEffects';
 import { useTypingEffect } from '@/hooks/useTypingEffect';
 import { motion as m } from 'motion/react';
@@ -18,7 +18,6 @@ import { faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 export default function Home() {
   const {
     dawnOpacity,
-    scrollToTop,
   } = useScrollEffects();
 
   // BGM 상태 관리
@@ -190,9 +189,7 @@ export default function Home() {
       <CalendarSection />
 
       {/* 사진 섹션 */}
-      <PhotoSection
-        onBackToTop={scrollToTop}
-      />
+      <PhotoSection/>
 
       {/* 지도 섹션 */}
       <MapSection />

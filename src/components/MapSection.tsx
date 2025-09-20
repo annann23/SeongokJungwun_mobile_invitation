@@ -45,21 +45,21 @@ const MapSection = memo(() => {
           window.kakao.maps.load(() => {
         const container = mapRef.current; 
         if (container) {         
-          var options = { 
+          const options = { 
             center: new window.kakao.maps.LatLng(37.50433, 127.04997), 
             level: 3,
             draggable: false,
           };
 
-          var map = new window.kakao.maps.Map(container, options); 
+          const map = new window.kakao.maps.Map(container, options); 
           
-          var markerPosition = new window.kakao.maps.LatLng(37.50433, 127.04997);
-          var marker = new window.kakao.maps.Marker({
+          const markerPosition = new window.kakao.maps.LatLng(37.50433, 127.04997);
+          const marker = new window.kakao.maps.Marker({
             position: markerPosition
           });
           marker.setMap(map);
           
-          var infowindow = new window.kakao.maps.InfoWindow({
+          const infowindow = new window.kakao.maps.InfoWindow({
             content: '<div style="width:150px; color:black; text-align:center; font-size:14px;">르비르모어</div>'
           });
           infowindow.open(map, marker);
@@ -227,7 +227,7 @@ const MapSection = memo(() => {
               transition={{ duration: 0.6, ease: "easeIn", delay: 0.2}}
               className='flex flex-col items-start py-6 border-y-1 border-gray-300 text-start gap-2 text-sm font-medium text-gray-500'>
               <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faCar}/> 자차 </div>
-              <b>네비게이션</b>'르비르모어' 혹은 '샹제리제센터' 검색<br/>
+              <b>네비게이션</b>&apos;르비르모어&apos; 혹은 &apos;샹제리제센터&apos; 검색<br/>
               <b>주차</b>샹제리제센터 A동 주차장(수용가능 450대)<br/>2시간 무료주차
               <div className='text-sm font-bold text-red'>*주차장 출입구가 협소하오니<br/> 가급적 대중교통 이용 부탁드립니다.</div>
             </m.div>
