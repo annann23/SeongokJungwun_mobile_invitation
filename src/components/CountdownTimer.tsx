@@ -15,7 +15,7 @@ const CountdownTimer = ({ targetDate, className = '' }: CountdownTimerProps) => 
   return (
     <div className={`w-[280px] flex justify-between items-center gap-4 text-center ${className}`}>
       <div className="text-[24px] text-violet-300">
-        {timeLeft.days} <span className='text-sm font-gowun-dodum text-gray-600'>일</span>
+        {timeLeft.days}<span className='text-sm font-gowun-dodum text-gray-600'>일</span>
       </div>
         <div className="text-center">
           <div className="text-[24px] font-mono text-violet-300">

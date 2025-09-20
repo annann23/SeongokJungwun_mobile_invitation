@@ -46,12 +46,6 @@
     html, body {
       color-scheme: light !important;
       background-color: #000000 !important;
-      color: #ffffff !important;
-    }
-    
-    /* 모든 요소의 색상을 강제로 설정 */
-    *, *::before, *::after {
-      color: inherit !important;
     }
     
     /* 배경색 강제 설정 */
@@ -70,21 +64,6 @@
     .text-black {
       color: #000000 !important;
     }
-    
-    /* 모바일 브라우저에서 자주 바뀌는 요소들 */
-    input, textarea, select, button {
-      background-color: inherit !important;
-      color: inherit !important;
-    }
-    
-    /* 스크롤바 색상도 강제 설정 */
-    ::-webkit-scrollbar {
-      background-color: #000000 !important;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background-color: #333333 !important;
-    }
   }
 }
 
@@ -98,25 +77,17 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light !important;
-    background-color: #000000 !important;
-    color: #ffffff !important;
   }
   
   html {
     color-scheme: light !important;
     background-color: #000000 !important;
-    color: #ffffff !important;
   }
   
   body {
     color-scheme: light !important;
     background-color: #000000 !important;
     color: #ffffff !important;
-  }
-  
-  /* 모든 요소 강제 라이트 모드 */
-  *, *::before, *::after {
-    color-scheme: light !important;
   }
   
   /* 모든 섹션의 배경색 강제 설정 */
@@ -134,52 +105,6 @@
     background-color: inherit !important;
     color: inherit !important;
   }
-  
-  /* 모바일 브라우저 특화 강제 설정 */
-  input, textarea, select, button, a, span, div, p, h1, h2, h3, h4, h5, h6 {
-    color-scheme: light !important;
-    background-color: inherit !important;
-    color: inherit !important;
-  }
-  
-  /* iOS Safari 특화 */
-  @supports (-webkit-touch-callout: none) {
-    * {
-      -webkit-color-scheme: light !important;
-      color-scheme: light !important;
-    }
-  }
-  
-  /* Android Chrome 특화 */
-  @supports (-webkit-appearance: none) {
-    * {
-      color-scheme: light !important;
-    }
-  }
-}
-
-/* 모바일 브라우저 다크모드 완전 차단 */
-html[data-color-scheme="light"],
-html[data-theme="light"],
-html.light {
-  color-scheme: light !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-body[data-color-scheme="light"],
-body[data-theme="light"],
-body.light {
-  color-scheme: light !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-/* 모든 요소에 라이트 모드 강제 적용 */
-[data-color-scheme="light"] *,
-[data-theme="light"] *,
-.light * {
-  color-scheme: light !important;
 }
 
 /* 별 반짝임 효과를 위한 커스텀 스타일 */

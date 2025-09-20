@@ -21,10 +21,11 @@ const MapSection = memo(() => {
     return `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
   };
 
-  const copyAddress = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(address);
-      alert('주소가 복사되었습니다!');
+  const copyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
     }
   };
 
@@ -59,7 +60,7 @@ const MapSection = memo(() => {
           marker.setMap(map);
           
           var infowindow = new window.kakao.maps.InfoWindow({
-            content: '<div style="width:150px; text-align:center; font-size:14px;">르비르모어</div>'
+            content: '<div style="width:150px; color:black; text-align:center; font-size:14px;">르비르모어</div>'
           });
           infowindow.open(map, marker);
         } else {
@@ -78,14 +79,13 @@ const MapSection = memo(() => {
 
   return (
     <div className="w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
-      <div className="text-center p-4 max-w-4xl mx-auto font-gowun-dodum">
-
+      <div className="text-center p-4 max-w-4xl mx-auto font-gowun-dodum">    
         <m.h1 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn" }}
-        className="text-black text-4xl text-center mb-8 font-noto-serif-kr font-scope-one">Location</m.h1>
+        className="text-black text-4xl text-center mb-8 font-scope-one">Location</m.h1>
         
         {/* 장소 정보 */}
         <div className="mb-8">
@@ -218,37 +218,39 @@ const MapSection = memo(() => {
         </m.div>
 
         {/*오는 방법 섹션*/}
-        <div className='flex flex-col gap-2 my-6'>
-          <m.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeIn", delay: 0.2}}
-            className='flex flex-col items-start py-6 border-y-1 border-gray-300 text-start gap-2 text-sm font-medium text-gray-500'>
-            <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faCar}/> 자차 </div>
-            <b>네비게이션</b>'르비르모어' 혹은 '샹제리제센터' 검색<br/>
-            <b>주차</b>샹제리제센터 A동 주차장(수용가능 450대)<br/>2시간 무료주차
-            <div className='text-sm font-bold text-red'>*주차장 출입구가 협소하오니<br/> 가급적 대중교통 이용 부탁드립니다.</div>
-          </m.div>
-          <m.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeIn", delay: 0.3 }}
-            className='flex flex-col py-6 border-b-1 border-gray-300 items-start text-start gap-2 text-sm font-medium text-gray-500'>
-            <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faBus}/> 버스 </div>
-            <b>146, 333, 341, 360, 740, 1700, 2000, 8001, 9414</b>
-            <span className='flex items-center gap-2'>선릉역 하차 - 도보 1분</span>
-          </m.div>
-          <m.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, ease: "easeIn", delay: 0.4 }}
-            className='flex flex-col py-6 border-b-1 border-gray-300 items-start text-start gap-2 text-sm font-medium text-gray-500'>
-            <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faTrainSubway}/> 지하철 </div>
-            2호선, 수인분당선 선릉역 1번 출구와 바로 연결
-          </m.div>
+        <div className='flex flex-col justify-center items-center gap-2 my-6 w-full'>
+          <div className='max-w-[500px] w-full'>
+            <m.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, ease: "easeIn", delay: 0.2}}
+              className='flex flex-col items-start py-6 border-y-1 border-gray-300 text-start gap-2 text-sm font-medium text-gray-500'>
+              <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faCar}/> 자차 </div>
+              <b>네비게이션</b>'르비르모어' 혹은 '샹제리제센터' 검색<br/>
+              <b>주차</b>샹제리제센터 A동 주차장(수용가능 450대)<br/>2시간 무료주차
+              <div className='text-sm font-bold text-red'>*주차장 출입구가 협소하오니<br/> 가급적 대중교통 이용 부탁드립니다.</div>
+            </m.div>
+            <m.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, ease: "easeIn", delay: 0.3 }}
+              className='flex flex-col py-6 border-b-1 border-gray-300 items-start text-start gap-2 text-sm font-medium text-gray-500'>
+              <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faBus}/> 버스 </div>
+              <b>146, 333, 341, 360, 740, 1700, 2000, 8001, 9414</b>
+              <span className='flex items-center gap-2'>선릉역 하차 - 도보 1분</span>
+            </m.div>
+            <m.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.6, ease: "easeIn", delay: 0.4 }}
+              className='flex flex-col py-6 border-b-1 border-gray-300 items-start text-start gap-2 text-sm font-medium text-gray-500'>
+              <div className='flex items-center gap-2 min-w-[100px] text-lg text-black'><FontAwesomeIcon icon={faTrainSubway}/> 지하철 </div>
+              2호선, 수인분당선 선릉역 1번 출구와 바로 연결
+            </m.div>
+          </div>
         </div>
       </div>
     </div>

@@ -6,16 +6,22 @@ import CountdownTimer from './CountdownTimer';
 export default function CalendarSection() {
   return (
     <div className='h-[120vh] relative flex flex-col items-center justify-center bg-[#fff]'>
+      <m.h1 
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        viewport={{ once: true, amount: 0.3 }}
+      className='text-black text-4xl text-center mb-8 font-scope-one'>Wedding Day</m.h1>
       <div className='relative z-10'>
         <m.div 
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true, amount: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
           className="w-screen bg-white p-6 border border-gray-300 max-w-[500px]"
         >
           {/* 요일 헤더 */}
-          <h1 className='text-black text-2xl text-center mb-8 font-scope-one'>Wedding Day</h1>
+          <h1 className='text-black text-2xl text-center mb-8 font-scope-one'>November</h1>
           <div className="grid grid-cols-7 gap-1 mb-1">
             {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
               <div 
@@ -78,13 +84,13 @@ export default function CalendarSection() {
           initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
           className='text-md font-gowun-dodum'>성옥♥정운 결혼식까지</m.span>
           <m.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.5 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
           >
             <CountdownTimer 
               targetDate={new Date('2025-11-08T15:30:00')}
@@ -94,7 +100,7 @@ export default function CalendarSection() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 2 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.3 }}
           className='text-md font-gowun-dodum'>남았어요!</m.span>
         </div>
       </div>

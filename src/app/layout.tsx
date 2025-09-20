@@ -57,28 +57,8 @@ export default function RootLayout({
             __html: `
               // 다크모드 강제 차단
               function forceLightMode() {
-                // HTML 요소 강제 설정
                 document.documentElement.style.colorScheme = 'light';
                 document.documentElement.setAttribute('data-color-scheme', 'light');
-                document.documentElement.setAttribute('data-theme', 'light');
-                document.documentElement.className = 'light';
-                
-                // Body 요소 강제 설정
-                document.body.style.colorScheme = 'light';
-                document.body.setAttribute('data-color-scheme', 'light');
-                document.body.setAttribute('data-theme', 'light');
-                document.body.className = 'light';
-                
-                // 모든 요소에 라이트 모드 강제 적용
-                const allElements = document.querySelectorAll('*');
-                allElements.forEach(el => {
-                  el.style.colorScheme = 'light';
-                  el.setAttribute('data-color-scheme', 'light');
-                });
-                
-                // CSS 변수 강제 설정
-                document.documentElement.style.setProperty('--color-scheme', 'light');
-                document.documentElement.style.setProperty('--theme', 'light');
               }
               
               // 즉시 실행
@@ -89,13 +69,16 @@ export default function RootLayout({
                 window.scrollTo(0, 0);
               });
               
+              // 페이지 로드 시 스크롤을 맨 위로 이동
+              window.addEventListener('load', function() {
+                window.scrollTo(0, 0);
+                forceLightMode();
+              });
+              
               // 다크모드 변경 감지 시 강제로 라이트 모드로 변경
               window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
                 forceLightMode();
               });
-              
-              // 주기적으로 라이트 모드 강제 적용 (모바일 브라우저 대응)
-              setInterval(forceLightMode, 1000);
             `,
           }}
         />

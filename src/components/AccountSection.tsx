@@ -37,25 +37,14 @@ const AccountSection = memo(() => {
     }
   ];
 
-  const unsecuredCopyToClipboard = (text: string) => { 
-    const textArea = document.createElement("textarea"); 
-    textArea.value=text; 
-    document.body.appendChild(textArea); 
-    textArea.focus();
-    textArea.select(); 
-    try { 
-      document.execCommand('copy')
-    } catch(err) {
-      console.error('Unable to copy to clipboard',err )
-    };
-    document.body.removeChild(textArea)};
-
-  const copyAccount = (account: string) => {
+  const copyAccount = async (account: string) => {
     if (window.isSecureContext && navigator.clipboard) {
-      navigator.clipboard.writeText(account);
-    } else {
-      unsecuredCopyToClipboard(account);
-    }
+      try {
+      await navigator.clipboard.writeText(account);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    } 
   };
 
   const AccountCard = ({ account, isExpanded }: { account: any, isExpanded: boolean }) => (
