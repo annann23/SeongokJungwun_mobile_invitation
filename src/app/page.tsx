@@ -56,7 +56,7 @@ export default function Home() {
         >
           <FontAwesomeIcon 
             icon={isMuted ? faVolumeXmark : faVolumeHigh} 
-            className="text-white text-sm"
+            className="text-white text-sm w-4 h-4"
           />
         </button>
 
