@@ -25,19 +25,16 @@ export default function Home() {
   const [showPlayPrompt, setShowPlayPrompt] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // 음소거 토글 함수
   const toggleMute = () => {
     const audio = audioRef.current;
     if (audio) {
       if (isMuted) {
-        // 음악 재생
         audio.play();
         audio.loop = true;
         audio.volume = 0.3;
         setShowPlayPrompt(false);
         audio.muted = false;
       } else {
-        // 음악 정지
         audio.pause();
         audio.muted = true;
       }
@@ -45,21 +42,24 @@ export default function Home() {
     }
   };
 
+  const setVh = () => {
+    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+  }
+  setVh();
+  window.addEventListener('resize', setVh);
+
   return (
     <div className="relative min-h-screen overflow-x-hidden">
-      {/* BGM 오디오 태그 */}
       <audio
         ref={audioRef}
         src="/music/invitation_bgm.mp3"
         preload="auto"
       />
       
-      {/* 별과 그라데이션이 있는 섹션들 */}
       <div className="relative min-h-screen bg-black text-white">
       <Stars />
       <DawnOverlay opacity={dawnOpacity} />
       
-      {/* 음소거 토글 버튼 */}
       <button
         onClick={toggleMute}
         className="fixed bottom-4 left-4 z-3000 bg-black opacity-50 w-10 h-10 rounded-full flex items-center justify-center"
@@ -71,7 +71,6 @@ export default function Home() {
         />
       </button>
 
-      {/* BGM 재생 안내 메시지 */}
       {showPlayPrompt && (
         <div className="fixed bottom-2.5 left-12 z-3000 text-white px-4 py-2 rounded-lg text-[12px] max-w-xs">
           <m.p 
@@ -82,7 +81,7 @@ export default function Home() {
         </div>
       )}
    
-        <div className="relative h-lvh flex flex-col justify-center items-center text-center z-30">
+        <div className="relative h-[calc(var(--vh)_*100)] flex flex-col justify-center items-center text-center z-30">
           <div className="font-waterfall text-white" style={{ 
             animation: 'textTwinkle 3s ease-in-out infinite alternate',
             height: '96px',
@@ -126,7 +125,7 @@ export default function Home() {
       <InvitationSection />
 
       {/* About Us 섹션 */}
-      <div className='min-h-screen flex flex-col items-center justify-center bg-white text-black font-gowun-dodum'>
+      <div className='min-h-screen h-[700px] flex flex-col items-center justify-center bg-white text-black font-gowun-dodum'>
         <m.h1 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -195,7 +194,7 @@ export default function Home() {
       <MapSection />
 
       {/*계좌번호 섹션*/}
-      <div className='min-h-screen h-lvh h-lvh flex flex-col items-center justify-center bg-white text-black py-20'>
+      <div className='min-h-screen h-[calc(var(--vh)_*100)] flex flex-col items-center justify-center bg-white text-black py-20'>
         <div className="w-full max-w-md mx-auto px-4">
           <m.h3 
             className="text-md text-center mb-4 font-noto-serif-kr"
