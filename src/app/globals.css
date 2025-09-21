@@ -67,13 +67,6 @@
   }
 }
 
-@layer utilities {
-  .scroll-container {
-    height: 300vh; 
-  }
-}
-
-/* 다크모드 완전 차단 - 최고 우선순위 */
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: light !important;

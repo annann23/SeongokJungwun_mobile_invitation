@@ -82,7 +82,7 @@ export default function Home() {
         </div>
       )}
    
-        <div className="relative h-screen flex flex-col justify-center items-center text-center z-30">
+        <div className="relative h-lvh flex flex-col justify-center items-center text-center z-30">
           <div className="font-waterfall text-white" style={{ 
             animation: 'textTwinkle 3s ease-in-out infinite alternate',
             height: '96px',
@@ -126,7 +126,7 @@ export default function Home() {
       <InvitationSection />
 
       {/* About Us 섹션 */}
-      <div className='min-h-screen flex flex-col items-center justify-center bg-white text-black py-20 font-gowun-dodum'>
+      <div className='min-h-screen flex flex-col items-center justify-center bg-white text-black font-gowun-dodum'>
         <m.h1 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -195,7 +195,7 @@ export default function Home() {
       <MapSection />
 
       {/*계좌번호 섹션*/}
-      <div className='min-h-screen flex flex-col items-center justify-center bg-white text-black py-20'>
+      <div className='min-h-screen h-lvh h-lvh flex flex-col items-center justify-center bg-white text-black py-20'>
         <div className="w-full max-w-md mx-auto px-4">
           <m.h3 
             className="text-md text-center mb-4 font-noto-serif-kr"
