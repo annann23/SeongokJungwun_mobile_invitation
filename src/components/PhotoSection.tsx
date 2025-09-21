@@ -107,6 +107,7 @@ const PhotoSection = memo(() => {
   const handleCloseModal = (e?: React.MouseEvent | React.TouchEvent) => {
     console.log('click close button')
     if (e) {
+      e.preventDefault();
       e.stopPropagation();
     }
     setSelectedImage(null);
