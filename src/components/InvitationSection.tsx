@@ -4,7 +4,7 @@ import { motion as m } from 'motion/react';
 
 export default function InvitationSection() {
   return (
-    <div className="h-[1900px] flex flex-col items-center justify-center relative" style={{ backgroundColor: '#ffffff' }}>
+    <section className="h-[1900px] flex flex-col items-center justify-center relative" style={{ backgroundColor: '#ffffff' }}>
       <div className="w-full h-full absolute inset-0" style={{
         background: 'linear-gradient(180deg, #000000 0%, #ffffff 50%, #ffffff 100%)'
       }}></div>
@@ -74,7 +74,7 @@ export default function InvitationSection() {
             viewport={{ once: true, amount: 0.5 }}
             className="text-black text-[14px] my-[4px] text-center font-noto-serif-kr"
           >
-            저희 두 사람의 새로운 시작을 <br/>귀한 발걸음으로 축복해주시면 감사드리겠습니다.
+            저희 두 사람의 새로운 시작을 <br/>귀한 발걸음으로 축복해주시면 <br/> 더없는 기쁨이 되겠습니다.
           </m.h3>   
           <m.h3 
             initial={{ opacity: 0, y: 50 }}
@@ -96,6 +96,6 @@ export default function InvitationSection() {
           </m.h3>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

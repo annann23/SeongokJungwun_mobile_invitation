@@ -78,7 +78,7 @@ const MapSection = memo(() => {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
+    <section className="relative w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="text-center p-4 max-w-4xl mx-auto font-gowun-dodum">    
         <m.h1 
         initial={{ opacity: 0, y: 20 }}
@@ -141,7 +141,12 @@ const MapSection = memo(() => {
         </div>
 
         {/* 지도 영역 */}
-        <div className="mb-8 flex flex-col items-center">
+        <m.div 
+         initial={{ opacity: 0, y: 20 }}
+         whileInView={{ opacity: 1, y: 0 }}
+         viewport={{ once: true, amount: 0.5 }}
+         transition={{ duration: 0.6, ease: "easeIn", delay: 0.8 }}
+        className="mb-8 flex flex-col items-center">
           <div className="relative w-full max-w-[500px] h-80 bg-gray-100 rounded-2xl overflow-hidden">
             <div 
               ref={mapRef} 
@@ -162,14 +167,14 @@ const MapSection = memo(() => {
               </div>
             )}
           </div>
-        </div>
+        </m.div>
 
         {/* 지도 서비스 버튼들 */}
         <m.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6, ease: "easeIn", delay: 0.8 }}
+          transition={{ duration: 0.6, ease: "easeIn", delay: 1 }}
           className="grid grid-cols-3 gap-4 max-w-md mx-auto">
           <button
             onClick={() => {
@@ -253,7 +258,7 @@ const MapSection = memo(() => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 });
 

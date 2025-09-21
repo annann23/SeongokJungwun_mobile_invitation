@@ -153,7 +153,7 @@ const PhotoSection = memo(() => {
   );
 
   return (
-    <div className="w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
+    <section className="relative w-full min-h-screen bg-white py-20" style={{ backgroundColor: '#ffffff' }}>
       <div className="text-center p-4 max-w-4xl mx-auto">
         <m.h1 
         initial={{ opacity: 0, y: 20 }}
@@ -259,7 +259,7 @@ const PhotoSection = memo(() => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 });
 
