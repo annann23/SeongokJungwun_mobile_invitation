@@ -4,13 +4,8 @@ import { memo } from 'react';
 import Image from 'next/image';
 
 const SilhouetteSection = memo(() => {
-  function setVh() {
-    document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-  }
-  setVh();
-  window.addEventListener('resize', setVh);
   return (
-    <div className="relative w-full h-[calc(100lvh)] flex items-end justify-center overflow-hidden z-20">
+    <div className="relative w-full h-[1200px] flex items-end justify-center overflow-hidden z-20">
       <div className="relative w-full h-full flex items-end justify-center">
         <div
           className="relative w-[250px] h-[320px] md:w-[300px] md:h-[400px] mb-[78px] group cursor-pointer"
