@@ -81,7 +81,7 @@ export default function Home() {
         </div>
       )}
    
-        <div className="relative h-[calc(var(--vh)_*100)] flex flex-col justify-center items-center text-center z-30">
+        <div className="relative h-[calc(100lvh)] flex flex-col justify-center items-center text-center z-30">
           <div className="font-waterfall text-white" style={{ 
             animation: 'textTwinkle 3s ease-in-out infinite alternate',
             height: '96px',
