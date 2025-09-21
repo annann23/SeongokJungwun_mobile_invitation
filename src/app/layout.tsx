@@ -9,9 +9,9 @@ export const metadata: Metadata = {
     description: '저희의 결혼식에 여러분을 초대합니다.',
     images: [
       {
-        url: '/images/wedding_img/img_main.jpg',
-        width: 1200,
-        height: 630,
+        url: '/images/wedding_img/img_sm_main.jpg',
+        width: 364,
+        height: 546,
         alt: '성옥♥정운 모바일 청첩장',
       },
     ],
