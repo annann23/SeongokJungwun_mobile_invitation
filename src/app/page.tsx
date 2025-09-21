@@ -38,8 +38,7 @@ export default function Home() {
   };
 
   return (
-    // <div className=''>
-      <div className="relative h-screen overflow-y-auto overflow-x-hidden">
+      <div id='main' className="relative h-screen overflow-y-auto overflow-x-hidden">
         <audio
           ref={audioRef}
           src="/music/invitation_bgm.mp3"

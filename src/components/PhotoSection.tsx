@@ -58,8 +58,18 @@ const PhotoSection = memo(() => {
     setSelectedImage(originalImages[index]);
     setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
     // 모달이 열릴 때 body 스크롤 차단
-    document.body.style.overflow = 'hidden';
+    blockScroll();
   };
+
+  const blockScroll = () => {
+    const main = document.getElementById('main');
+    if(main) main.style.overflow = 'hidden';
+  }
+
+  const resumeScroll = () => {
+    const main = document.getElementById('main');
+    if(main) main.style.overflow = 'auto';
+  }
 
   // 터치 시작과 끝 위치를 비교해서 실제 탭인지 확인
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -90,42 +100,30 @@ const PhotoSection = memo(() => {
       setSelectedImage(originalImages[index]);
       setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
       // 모달이 열릴 때 body 스크롤 차단
-      document.body.style.overflow = 'hidden';
+      blockScroll();
     }
   };
 
   const handleCloseModal = (e?: React.MouseEvent | React.TouchEvent) => {
-    // 이미지가 로드되기 전에는 모달을 닫지 않음
-    if (!modalImageLoaded) {
-      return;
-    }
-    
+    console.log('click close button')
     if (e) {
       e.stopPropagation();
     }
     setSelectedImage(null);
     setModalImageLoaded(false);
     // 모달이 닫힐 때 body 스크롤 복원
-    document.body.style.overflow = 'unset';
+    resumeScroll();
   };
 
   // 모달 배경 클릭 시 모달 닫기
   const handleModalBackgroundClick = (e: React.MouseEvent | React.TouchEvent) => {
+    if(!modalImageLoaded) return;
     // 모달 배경을 직접 클릭했을 때만 닫기
     e.preventDefault();
     e.stopPropagation();
     if (e.target === e.currentTarget) {
       handleCloseModal();
     }
-  };
-
-  // 모달에서 터치 이벤트 차단 (스크롤 방지)
-  const handleModalTouchStart = (e: React.TouchEvent) => {
-    e.preventDefault();
-  };
-
-  const handleModalTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault();
   };
 
   const handleShowMore = (e: React.MouseEvent | React.TouchEvent) => {
@@ -230,16 +228,15 @@ const PhotoSection = memo(() => {
       {/* 모달 - 선택된 이미지 크게 보기 */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 z-1"
           onClick={handleModalBackgroundClick}
           onTouchEnd={handleModalBackgroundClick}
-          onTouchStart={handleModalTouchStart}
-          onTouchMove={handleModalTouchMove}
         >
            <button
              onClick={handleCloseModal}
-             disabled={!modalImageLoaded}
-             className={`absolute top-4 right-4 w-8 h-8 text-white rounded-full flex items-center justify-center text-xl font-bold transition-all duration-200`}
+             onTouchEnd={handleCloseModal}
+            //  disabled={!modalImageLoaded}
+             className={`absolute top-4 right-4 w-8 h-8 text-white text-xl font-bold z-50`}
          >
              <FontAwesomeIcon icon={faXmark} />
            </button>
