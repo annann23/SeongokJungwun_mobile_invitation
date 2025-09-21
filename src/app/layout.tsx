@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '성옥♥정운 모바일 청첩장',
+  title: '성옥♥정운 결혼합니다.',
   description: '저희의 결혼식에 여러분을 초대합니다.',
   openGraph: {
-    title: '성옥♥정운 모바일 청첩장',
+    title: '성옥♥정운 결혼합니다.',
     description: '저희의 결혼식에 여러분을 초대합니다.',
     images: [
       {
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '성옥♥정운 모바일 청첩장',
+    title: '성옥♥정운 결혼합니다.',
     description: '저희의 결혼식에 여러분을 초대합니다.',
     images: ['/images/wedding_img/img_main.jpg'],
   },
