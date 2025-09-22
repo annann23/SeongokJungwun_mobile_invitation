@@ -124,7 +124,7 @@ export default function Home() {
         <MapSection />
 
         {/*계좌번호 섹션*/}
-        <section className='relative min-h-screen h-[600px] flex flex-col items-center justify-center bg-white text-black py-20'>
+        <section className='relative min-h-screen h-auto flex flex-col items-center justify-center bg-white text-black py-20'>
           <div className="w-full max-w-md mx-auto px-4">
             <m.h3 
               className="text-md text-center mb-4 font-noto-serif-kr"
