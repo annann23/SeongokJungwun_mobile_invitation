@@ -11,8 +11,7 @@ const Stars = memo(() => {
     // 기존 별들 제거
     starsContainerRef.current.innerHTML = '';
 
-    // 50개의 별로 줄여서 성능 향상
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 150; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       
