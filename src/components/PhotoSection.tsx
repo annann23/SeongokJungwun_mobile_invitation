@@ -3,37 +3,17 @@
 import { memo, useState } from 'react';
 import Image from 'next/image';
 import { motion as m } from 'framer-motion';
-import { faArrowDown, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown, faXmark, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const PhotoSection = memo(() => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [showAllImages, setShowAllImages] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
-  const [modalImageLoaded, setModalImageLoaded] = useState(false);
 
-  // 썸네일용 작은 이미지들 (img_sm_)
-  const thumbnailImages = [
-    '/images/wedding_img/img_sm_1.jpeg',
-    '/images/wedding_img/img_sm_2.jpeg',
-    '/images/wedding_img/img_sm_3.jpeg',
-    '/images/wedding_img/img_sm_4.jpeg',
-    '/images/wedding_img/img_sm_5.jpeg',
-    '/images/wedding_img/img_sm_6.jpeg',
-    '/images/wedding_img/img_sm_7.jpeg',
-    '/images/wedding_img/img_sm_8.jpeg',
-    '/images/wedding_img/img_sm_9.jpeg',
-    '/images/wedding_img/img_sm_10.jpeg',
-    '/images/wedding_img/img_sm_11.jpeg',
-    '/images/wedding_img/img_sm_12.jpeg',
-    '/images/wedding_img/img_sm_13.jpeg',
-    '/images/wedding_img/img_sm_14.jpeg',
-    '/images/wedding_img/img_sm_15.jpeg',
-    '/images/wedding_img/img_sm_16.jpeg',
-  ];
-
-  // 모달용 원본 이미지들 (img_)
-  const originalImages = [
+  // 원본 이미지들을 직접 사용 (썸네일과 원본 분리 제거)
+  const images = [
     '/images/wedding_img/img_1.jpeg',
     '/images/wedding_img/img_2.jpeg',
     '/images/wedding_img/img_3.jpeg',
@@ -52,11 +32,11 @@ const PhotoSection = memo(() => {
     '/images/wedding_img/img_16.jpeg',
   ];
 
-  const displayedImages = showAllImages ? thumbnailImages : thumbnailImages.slice(0, 9);
+  const displayedImages = showAllImages ? images : images.slice(0, 9);
 
   const handleImageClick = (index: number) => {
-    setSelectedImage(originalImages[index]);
-    setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
+    setSelectedImage(images[index]);
+    setSelectedImageIndex(index);
     // 모달이 열릴 때 body 스크롤 차단
     blockScroll();
   };
@@ -97,28 +77,25 @@ const PhotoSection = memo(() => {
     
     // 10px 이내의 움직임이면 탭으로 간주
     if (deltaX < 10 && deltaY < 10) {
-      setSelectedImage(originalImages[index]);
-      setModalImageLoaded(false); // 모달 이미지 로드 상태 초기화
+      setSelectedImage(images[index]);
+      setSelectedImageIndex(index);
       // 모달이 열릴 때 body 스크롤 차단
       blockScroll();
     }
   };
 
   const handleCloseModal = (e?: React.MouseEvent | React.TouchEvent) => {
-    console.log('click close button')
     if (e) {
       e.preventDefault();
       e.stopPropagation();
     }
     setSelectedImage(null);
-    setModalImageLoaded(false);
     // 모달이 닫힐 때 body 스크롤 복원
     resumeScroll();
   };
 
   // 모달 배경 클릭 시 모달 닫기
   const handleModalBackgroundClick = (e: React.MouseEvent | React.TouchEvent) => {
-    if(!modalImageLoaded) return;
     // 모달 배경을 직접 클릭했을 때만 닫기
     e.preventDefault();
     e.stopPropagation();
@@ -137,9 +114,18 @@ const PhotoSection = memo(() => {
     setLoadedImages(prev => new Set(prev).add(index));
   };
 
-  // 모달 이미지 로드 핸들러
-  const handleModalImageLoad = () => {
-    setModalImageLoaded(true);
+  // 이전 이미지로 이동
+  const handlePreviousImage = () => {
+    const prevIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : images.length - 1;
+    setSelectedImage(images[prevIndex]);
+    setSelectedImageIndex(prevIndex);
+  };
+
+  // 다음 이미지로 이동
+  const handleNextImage = () => {
+    const nextIndex = selectedImageIndex < images.length - 1 ? selectedImageIndex + 1 : 0;
+    setSelectedImage(images[nextIndex]);
+    setSelectedImageIndex(nextIndex);
   };
 
   // 스켈레톤 컴포넌트
@@ -233,14 +219,34 @@ const PhotoSection = memo(() => {
           onClick={handleModalBackgroundClick}
           onTouchEnd={handleModalBackgroundClick}
         >
-           <button
-             onClick={handleCloseModal}
-             onTouchEnd={handleCloseModal}
-            //  disabled={!modalImageLoaded}
-             className={`absolute top-4 right-4 w-8 h-8 text-white text-xl font-bold z-50`}
-         >
-             <FontAwesomeIcon icon={faXmark} />
-           </button>
+          {/* 닫기 버튼 */}
+          <button
+            onClick={handleCloseModal}
+            onTouchEnd={handleCloseModal}
+            className="absolute top-4 right-4 w-8 h-8 text-white text-xl font-bold z-50"
+          >
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+
+          {/* 이전 이미지 버튼 */}
+          <button
+            onClick={handlePreviousImage}
+            onTouchEnd={handlePreviousImage}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center z-50 transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faChevronLeft} className="text-xl" />
+          </button>
+
+          {/* 다음 이미지 버튼 */}
+          <button
+            onClick={handleNextImage}
+            onTouchEnd={handleNextImage}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center z-50 transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faChevronRight} className="text-xl" />
+          </button>
+
+          {/* 이미지 컨테이너 */}
           <div 
             className="relative max-w-full max-h-full"
             onClick={(e) => e.stopPropagation()}
@@ -252,8 +258,12 @@ const PhotoSection = memo(() => {
               width={800}
               height={800}
               className="max-w-full max-h-full object-contain rounded-lg"
-              onLoad={handleModalImageLoad}
             />
+          </div>
+
+          {/* 이미지 카운터 */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+            {selectedImageIndex + 1} / {images.length}
           </div>
         </div>
       )}

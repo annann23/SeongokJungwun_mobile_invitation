@@ -14,6 +14,7 @@ import AccountSection from '@/components/AccountSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeHigh, faVolumeXmark } from '@fortawesome/free-solid-svg-icons';
 import AboutUsSection from '@/components/AboutUsSection';
+import ShareSection from '@/components/ShareSection';
 
 export default function Home() {
   const [isMuted, setIsMuted] = useState(true);
@@ -148,6 +149,9 @@ export default function Home() {
             <AccountSection />
           </div>
         </section>
+
+        {/* 공유하기 섹션 */}
+        <ShareSection/>
       </div>
     </div>
   );

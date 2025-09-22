@@ -52,6 +52,7 @@ export default function RootLayout({
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab79b565d2a567a804647a16d8bdbba2&autoload=false"
           async
         ></script>
+        <script defer src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
