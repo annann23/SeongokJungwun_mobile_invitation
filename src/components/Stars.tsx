@@ -11,7 +11,7 @@ const Stars = memo(() => {
     // 기존 별들 제거
     starsContainerRef.current.innerHTML = '';
 
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 300; i++) {
       const star = document.createElement('div');
       star.className = 'star';
       
