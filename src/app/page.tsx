@@ -90,7 +90,7 @@ export default function Home() {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <TypingText text="and" delay={2000} />
+              <TypingText text="and" delay={1300} />
             </div>
             <div className="font-waterfall text-white" style={{ 
               animation: 'textTwinkle 3s ease-in-out infinite alternate',
@@ -100,7 +100,7 @@ export default function Home() {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <TypingText text="Kim Jungwun" delay={3000} />
+              <TypingText text="Kim Jungwun" delay={2000} />
             </div>
             <span className='text-[#ffffff] opacity-10 text-[14px] font-waterfall absolute bottom-[30px] right-[30px]'>made by jungwun</span>
         </div>
@@ -164,7 +164,7 @@ function TypingText({ text, delay }: {
 }) {
   const { displayText } = useTypingEffect({ 
     text, 
-    speed: 100, 
+    speed: 70, 
     delay 
   });
 

@@ -45,7 +45,7 @@ export default function InvitationSection() {
                     <Image src="/images/kakao.svg" width="30" height="30" alt="카카오톡 공유하기" />
         
                 </m.button>
-                <span className='text-black font-gowun-dodum' >공유하기</span>
+                <span className='text-black font-gowun-dodum'>공유하기</span>
             </div>
             <div className='flex flex-col gap-2 justify-center item-center'>
                 <m.button

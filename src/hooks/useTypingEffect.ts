@@ -6,7 +6,7 @@ interface UseTypingEffectProps {
   delay?: number;
 }
 
-export const useTypingEffect = ({ text, speed = 100, delay = 0 }: UseTypingEffectProps) => {
+export const useTypingEffect = ({ text, speed = 30, delay = 0 }: UseTypingEffectProps) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);

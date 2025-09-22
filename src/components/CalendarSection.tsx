@@ -16,7 +16,7 @@ export default function CalendarSection() {
         <m.div 
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={{ duration: 1, delay: 0.3 }}
           viewport={{ once: true, amount: 0.3 }}
           className="w-screen bg-white p-6 border border-gray-300 max-w-[500px]"
         >
@@ -83,13 +83,13 @@ export default function CalendarSection() {
           <m.span
           initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1 }}
+            transition={{ duration: 1, delay: 0 }}
             viewport={{ once: true, amount: 0.3 }}
           className='text-md font-gowun-dodum'>성옥♥정운 결혼식까지</m.span>
           <m.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={{ duration: 1, delay: 0.2 }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <CountdownTimer 
@@ -99,7 +99,7 @@ export default function CalendarSection() {
           <m.span
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 2 }}
+            transition={{ duration: 1, delay: 0.4 }}
             viewport={{ once: true, amount: 0.3 }}
           className='text-md font-gowun-dodum'>남았어요!</m.span>
         </div>
