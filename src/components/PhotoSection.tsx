@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion as m } from 'framer-motion';
 import { faArrowDown, faXmark, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -11,6 +11,8 @@ const PhotoSection = memo(() => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [showAllImages, setShowAllImages] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [isModalImageLoading, setIsModalImageLoading] = useState(false);
+  const [loadingTimer, setLoadingTimer] = useState<NodeJS.Timeout | null>(null);
 
   // 원본 이미지들을 직접 사용 (썸네일과 원본 분리 제거)
   const images = [
@@ -34,9 +36,19 @@ const PhotoSection = memo(() => {
 
   const displayedImages = showAllImages ? images : images.slice(0, 9);
 
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (loadingTimer) {
+        clearTimeout(loadingTimer);
+      }
+    };
+  }, [loadingTimer]);
+
   const handleImageClick = (index: number) => {
     setSelectedImage(images[index]);
     setSelectedImageIndex(index);
+    startLoading();
     // 모달이 열릴 때 body 스크롤 차단
     blockScroll();
   };
@@ -79,6 +91,7 @@ const PhotoSection = memo(() => {
     if (deltaX < 10 && deltaY < 10) {
       setSelectedImage(images[index]);
       setSelectedImageIndex(index);
+      startLoading();
       // 모달이 열릴 때 body 스크롤 차단
       blockScroll();
     }
@@ -90,6 +103,7 @@ const PhotoSection = memo(() => {
       e.stopPropagation();
     }
     setSelectedImage(null);
+    finishLoading();
     // 모달이 닫힐 때 body 스크롤 복원
     resumeScroll();
   };
@@ -114,11 +128,36 @@ const PhotoSection = memo(() => {
     setLoadedImages(prev => new Set(prev).add(index));
   };
 
+  // 로딩 시작 처리 (0.3초 후 로딩바 표시)
+  const startLoading = () => {
+    // 기존 타이머가 있다면 클리어
+    if (loadingTimer) {
+      clearTimeout(loadingTimer);
+    }
+    
+    // 0.3초 후에 로딩바 표시
+    const timer = setTimeout(() => {
+      setIsModalImageLoading(true);
+    }, 300);
+    
+    setLoadingTimer(timer);
+  };
+
+  // 로딩 완료 처리 (타이머 클리어 및 로딩바 숨김)
+  const finishLoading = () => {
+    if (loadingTimer) {
+      clearTimeout(loadingTimer);
+      setLoadingTimer(null);
+    }
+    setIsModalImageLoading(false);
+  };
+
   // 이전 이미지로 이동
   const handlePreviousImage = () => {
     const prevIndex = selectedImageIndex > 0 ? selectedImageIndex - 1 : images.length - 1;
     setSelectedImage(images[prevIndex]);
     setSelectedImageIndex(prevIndex);
+    startLoading();
   };
 
   // 다음 이미지로 이동
@@ -126,6 +165,12 @@ const PhotoSection = memo(() => {
     const nextIndex = selectedImageIndex < images.length - 1 ? selectedImageIndex + 1 : 0;
     setSelectedImage(images[nextIndex]);
     setSelectedImageIndex(nextIndex);
+    startLoading();
+  };
+
+  // 모달 이미지 로딩 완료 처리
+  const handleModalImageLoad = () => {
+    finishLoading();
   };
 
   // 스켈레톤 컴포넌트
@@ -133,6 +178,16 @@ const PhotoSection = memo(() => {
     <div className="aspect-square rounded-lg overflow-hidden relative bg-gray-200 animate-pulse">
       <div className="w-full h-full flex items-center justify-center">
         <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+      </div>
+    </div>
+  );
+
+  // 모달용 로딩바 컴포넌트
+  const ModalLoadingBar = () => (
+    <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-40">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full animate-spin mb-4 mx-auto"></div>
+        <p className="text-white text-sm">이미지 로딩 중...</p>
       </div>
     </div>
   );
@@ -219,6 +274,8 @@ const PhotoSection = memo(() => {
           onClick={handleModalBackgroundClick}
           onTouchEnd={handleModalBackgroundClick}
         >
+          {/* 로딩바 */}
+          {isModalImageLoading && <ModalLoadingBar />}
           {/* 닫기 버튼 */}
           <button
             onClick={handleCloseModal}
@@ -258,6 +315,7 @@ const PhotoSection = memo(() => {
               width={800}
               height={800}
               className="max-w-full max-h-full object-contain rounded-lg"
+              onLoad={handleModalImageLoad}
             />
           </div>
 
