@@ -43,6 +43,12 @@ const AccountSection = memo(() => {
       account: "3333-03-1650728",
       relation: "신부",
     },
+    {
+      name: "김봉현",
+      bank: "신한은행",
+      account: "110-14-3513962",
+      relation: "신부 아버지",
+    },
   ];
 
   const copyAccount = (account: string) => {
