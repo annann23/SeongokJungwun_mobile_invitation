@@ -59,7 +59,7 @@ export default function InvitationSection() {
       <div className="flex flex-col gap-2 justify-center item-center">
         <m.button
           onClick={copyLink}
-          className="flex justify-center items-center h-[65px] w-[65px] bg-gray-400 rounded-full shadow-md"
+          className="flex justify-center items-center h-[65px] w-[65px] bg-gray-400 rounded-full shadow-md active:bg-gray-500 transition duration-400"
         >
           <FontAwesomeIcon icon={faShareNodes} />
         </m.button>

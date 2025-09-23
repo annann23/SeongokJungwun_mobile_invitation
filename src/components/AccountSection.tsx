@@ -89,7 +89,7 @@ const AccountSection = memo(() => {
           <div className="flex flex-col items-center gap-0.5">
             <button
               onClick={() => copyAccount(account.account)}
-              className="w-16 h-8 bg-gray-200 rounded-md flex items-center justify-center"
+              className="w-16 h-8 bg-gray-200 rounded-md flex items-center justify-center active:bg-gray-300 transition duration-300"
             >
               <span className="text-[12px] text-gray-600">복사하기</span>
             </button>
