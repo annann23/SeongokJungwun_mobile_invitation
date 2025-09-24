@@ -51,8 +51,8 @@ const AccountSection = memo(() => {
     },
     {
       name: "전선자",
-      bank: "신한은행",
-      account: "110-14-3513962",
+      bank: "국민은행",
+      account: "667525-95-100203",
       relation: "신부 어머니",
     },
   ];
