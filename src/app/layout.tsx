@@ -1,58 +1,72 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
+import DevToolsBlocker from "@/components/DevToolsBlocker";
 
 export const metadata: Metadata = {
-  title: '성옥♥정운 결혼합니다.',
-  description: '저희의 결혼식에 여러분을 초대합니다.',
+  title: "성옥♥정운 결혼합니다.",
+  description: "저희의 결혼식에 여러분을 초대합니다.",
   openGraph: {
-    title: '성옥♥정운 결혼합니다.',
-    description: '저희의 결혼식에 여러분을 초대합니다.',
+    title: "성옥♥정운 결혼합니다.",
+    description: "저희의 결혼식에 여러분을 초대합니다.",
     images: [
       {
-        url: '/images/wedding_img/img_sm_main.jpg',
+        url: "/images/wedding_img/img_sm_main.jpg",
         width: 364,
         height: 546,
-        alt: '성옥♥정운 모바일 청첩장',
+        alt: "성옥♥정운 모바일 청첩장",
       },
     ],
-    type: 'website',
-    locale: 'ko_KR',
+    type: "website",
+    locale: "ko_KR",
   },
   twitter: {
-    card: 'summary_large_image',
-    title: '성옥♥정운 결혼합니다.',
-    description: '저희의 결혼식에 여러분을 초대합니다.',
-    images: ['/images/wedding_img/img_main.jpg'],
+    card: "summary_large_image",
+    title: "성옥♥정운 결혼합니다.",
+    description: "저희의 결혼식에 여러분을 초대합니다.",
+    images: ["/images/wedding_img/img_main.jpg"],
   },
-}
+};
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1.0,
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="ko">
       <head>
-        <meta name="color-scheme" content="light"/>
-        <meta name="theme-color" content="#ffffff"/>
-        <meta name="supported-color-schemes" content="light"/>
-        <meta name="msapplication-navbutton-color" content="#ffffff"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="light-content"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/>
-        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200..900&family=Scope+One&family=Waterfall&display=swap" rel="stylesheet"/>
-        <script 
-          type="text/javascript" 
+        <meta name="color-scheme" content="light" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="supported-color-schemes" content="light" />
+        <meta name="msapplication-navbutton-color" content="#ffffff" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="light-content"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@200..900&family=Scope+One&family=Waterfall&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          type="text/javascript"
           src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ab79b565d2a567a804647a16d8bdbba2&autoload=false"
           async
         ></script>
-        <script defer src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+        <script
+          defer
+          src="https://developers.kakao.com/sdk/js/kakao.min.js"
+        ></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -84,7 +98,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <DevToolsBlocker />
+        {children}
+      </body>
     </html>
-  )
+  );
 }

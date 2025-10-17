@@ -117,8 +117,6 @@ const PhotoSection = memo(() => {
     resumeScroll();
   };
 
-  // 배경 클릭으로는 닫지 않음 (X 버튼으로만 닫기)
-
   const handleShowMore = (e: React.MouseEvent | React.TouchEvent) => {
     e.preventDefault();
     e.stopPropagation();
