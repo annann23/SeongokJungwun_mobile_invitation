@@ -4,6 +4,27 @@ import { motion as m } from "motion/react";
 import CountdownTimer from "./CountdownTimer";
 
 export default function CalendarSection() {
+  const weddingDate = new Date("2025-11-08T15:30:00");
+  const today = new Date();
+
+  // 날짜 비교 (시간 제외하고 날짜만 비교)
+  const todayDateString = today.toDateString();
+  const weddingDateString = weddingDate.toDateString();
+  const isWeddingToday = todayDateString === weddingDateString;
+  const isWeddingPast = today > weddingDate && !isWeddingToday;
+
+  // 지난 일수 계산 (날짜 기준)
+  const todayDateOnly = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  );
+  const weddingDateOnly = new Date(2025, 10, 8); // 11월 = 10 (0부터 시작)
+  const daysPassed = Math.floor(
+    (todayDateOnly.getTime() - weddingDateOnly.getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+
   return (
     <section className="h-[800px] relative flex flex-col items-center justify-center bg-[#fff]">
       <m.h1
@@ -87,32 +108,59 @@ export default function CalendarSection() {
 
         <div className="flex flex-col items-center gap-4 text-black text-center my-10">
           {/* bg-violet-100 py-8 */}
-          <m.span
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            className="text-md font-gowun-dodum"
-          >
-            성옥♥정운 결혼식까지
-          </m.span>
-          <m.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <CountdownTimer targetDate={new Date("2025-11-08T15:30:00")} />
-          </m.div>
-          <m.span
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            viewport={{ once: true, amount: 0.3 }}
-            className="text-md font-gowun-dodum"
-          >
-            남았어요!
-          </m.span>
+          {isWeddingToday ? (
+            <>
+              <m.span
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="text-md font-gowun-dodum"
+              >
+                성옥♥정운 결혼식이 <span className="text-violet-300">오늘</span>
+                이에요!🎉🎉
+              </m.span>
+            </>
+          ) : isWeddingPast ? (
+            <m.span
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="text-md font-gowun-dodum"
+            >
+              성옥♥정운 결혼식이 {daysPassed}일 지났어요❤️
+            </m.span>
+          ) : (
+            <>
+              <m.span
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="text-md font-gowun-dodum"
+              >
+                성옥♥정운 결혼식까지
+              </m.span>
+              <m.div
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                <CountdownTimer targetDate={weddingDate} />
+              </m.div>
+              <m.span
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                viewport={{ once: true, amount: 0.3 }}
+                className="text-md font-gowun-dodum"
+              >
+                남았어요!
+              </m.span>
+            </>
+          )}
         </div>
       </div>
     </section>
