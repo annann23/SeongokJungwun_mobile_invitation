@@ -2,11 +2,11 @@ import { motion as m } from "motion/react";
 
 export default function AboutUsSection() {
   return (
-    <section className="min-h-screen h-[800px] relative flex flex-col items-center justify-center bg-white text-black font-gowun-dodum">
+    <m.section className="min-h-screen h-[1200px] pt-[400px] relative flex flex-col items-center justify-center bg-white text-black font-gowun-dodum">
       <m.h1
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 1 }}
         transition={{ duration: 0.6, ease: "easeIn" }}
         className="text-black text-4xl text-center mb-8 font-scope-one"
       >
@@ -15,7 +15,7 @@ export default function AboutUsSection() {
       <m.h3
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn", delay: 0.2 }}
         className="text-black text-xl text-center mb-8"
       >
@@ -24,7 +24,7 @@ export default function AboutUsSection() {
       <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn", delay: 0.4 }}
         className="text-black text-md text-center mb-12"
       >
@@ -36,7 +36,7 @@ export default function AboutUsSection() {
       <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn", delay: 0.6 }}
         className="text-black text-md text-center mb-8"
       >
@@ -52,7 +52,7 @@ export default function AboutUsSection() {
       <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn", delay: 0.8 }}
         className="text-black text-md text-center mb-8"
       >
@@ -68,7 +68,7 @@ export default function AboutUsSection() {
       <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 0.6, ease: "easeIn", delay: 1 }}
         className="text-black text-md text-center mb-8"
       >
@@ -81,6 +81,6 @@ export default function AboutUsSection() {
         </span>
         일 됐어요!
       </m.div>
-    </section>
+    </m.section>
   );
 }

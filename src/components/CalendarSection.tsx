@@ -26,7 +26,7 @@ export default function CalendarSection() {
   );
 
   return (
-    <section className="h-[800px] relative flex flex-col items-center justify-center bg-[#fff]">
+    <section className="h-[1400px] relative flex flex-col items-center justify-center bg-[#fff]">
       <m.h1
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ opacity: 1, y: 0 }}

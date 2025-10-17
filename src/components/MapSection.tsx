@@ -91,7 +91,7 @@ const MapSection = memo(() => {
 
   return (
     <section
-      className="relative w-full min-h-screen bg-white py-20"
+      className="relative w-full min-h-screen bg-white pt-[400px]"
       style={{ backgroundColor: "#ffffff" }}
     >
       <div className="text-center p-4 max-w-4xl mx-auto font-gowun-dodum">
