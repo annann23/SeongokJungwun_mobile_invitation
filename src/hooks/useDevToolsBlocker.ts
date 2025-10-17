@@ -21,8 +21,8 @@ export const useDevToolsBlocker = () => {
         ) {
           if (!devtools.open) {
             devtools.open = true;
-            // 개발자도구가 열렸을 때 페이지 새로고침
-            window.location.reload();
+            // 개발자도구가 열렸을 때 경고 페이지로 대체
+            showDevToolsWarning();
           }
         } else {
           devtools.open = false;
@@ -55,6 +55,80 @@ export const useDevToolsBlocker = () => {
       console.timeEnd = noop;
       console.count = noop;
       console.clear = noop;
+    };
+
+    // 개발자도구 경고 페이지 표시
+    const showDevToolsWarning = () => {
+      document.body.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          color: white;
+          text-align: center;
+          z-index: 999999;
+        ">
+          <div style="
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+          ">
+            <div style="
+              font-size: 48px;
+              margin-bottom: 20px;
+              animation: pulse 2s infinite;
+            ">⚠️</div>
+            
+            <h1 style="
+              font-size: 28px;
+              font-weight: bold;
+              margin-bottom: 20px;
+              text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            ">개발자도구 사용이 감지되었습니다</h1>
+            
+            <p style="
+              font-size: 16px;
+              line-height: 1.6;
+              opacity: 0.9;
+              margin-bottom: 30px;
+            ">이 페이지는 보안을 위해 개발자도구 사용을 제한합니다.<br>
+            개발자도구를 닫고 페이지를 새로고침해주세요.</p>
+            
+            <button onclick="window.location.reload()" style="
+              background: rgba(255, 255, 255, 0.2);
+              border: 2px solid rgba(255, 255, 255, 0.3);
+              color: black;
+              padding: 12px 30px;
+              border-radius: 25px;
+              font-size: 16px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+              backdrop-filter: blur(10px);
+            " onmouseover="this.style.background='rgba(255, 255, 255, 0.3)'" 
+               onmouseout="this.style.background='rgba(255, 255, 255, 0.2)'">
+              페이지 새로고침
+            </button>
+          </div>
+        </div>
+        
+        <style>
+          @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+          }
+        </style>
+      `;
     };
 
     // 우클릭은 차단되지 않지만 복사 기능은 정상 작동
