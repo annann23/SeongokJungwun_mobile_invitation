@@ -23,7 +23,20 @@ const MapSection = memo(() => {
   };
 
   const copyAddress = () => {
-    copy(address);
+    const success = copy(address);
+    if (success) {
+      alert("주소가 복사되었습니다!");
+    } else {
+      // 복사 실패 시 대안
+      navigator.clipboard
+        .writeText(address)
+        .then(() => {
+          alert("주소가 복사되었습니다!");
+        })
+        .catch(() => {
+          alert("복사에 실패했습니다. 주소를 직접 선택해서 복사해주세요.");
+        });
+    }
   };
 
   const callPhone = () => {

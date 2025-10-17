@@ -58,7 +58,20 @@ const AccountSection = memo(() => {
   ];
 
   const copyAccount = (account: string) => {
-    copy(account);
+    const success = copy(account);
+    if (success) {
+      alert("계좌번호가 복사되었습니다!");
+    } else {
+      // 복사 실패 시 대안
+      navigator.clipboard
+        .writeText(account)
+        .then(() => {
+          alert("계좌번호가 복사되었습니다!");
+        })
+        .catch(() => {
+          alert("복사에 실패했습니다. 계좌번호를 직접 선택해서 복사해주세요.");
+        });
+    }
   };
 
   const AccountCard = ({
